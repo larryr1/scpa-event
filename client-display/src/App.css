@@ -1,0 +1,50 @@
+.App {
+  text-align: center;
+
+  background:
+    /* Right bottom triangle*/
+    linear-gradient(120deg,transparent 50%,#ffffff 50%) bottom right,
+    #921414;
+  background-size: 39% 100%; /* Width/height, perfect right triangle on a 1920*1080 screen. */
+  background-repeat:no-repeat;
+}
+
+.App-logo {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  margin: 5vw;
+  width: 15%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  padding: 5vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-header > h1 {
+  padding: 0px;
+  margin: 0px;
+}
+
+.App-link {
+  color: #61dafb;
+  text-decoration: none;
+}
+
+.App-time {
+  letter-spacing: .20rem;
+  font-weight: 600;
+}
