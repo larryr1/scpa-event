@@ -1,18 +1,30 @@
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
 import { Clock } from './components/utilities/Clock';
+import { EventPreview } from './components/EventPreview';
+import { Messages } from './components/Messages';
 
 function App() {
+
+  console.log("Rendering app!")
+
   return (
     <div className="App">
-      <img src='/scpa.png' className='App-logo' alt='SCPA Logo' />
+      <img src={logo} className='App-logo' alt='SCPA Logo' />
 
-      <header className="App-header">
-        <h1>Somerset College Preparatory Academy</h1>
+      <div className="App-body">
+        <h1 className='School-color'>Somerset College Preparatory Academy</h1>
         <Clock className="App-time" />
-      </header>
+        <EventPreview />
+        <Messages />
+      </div>
     </div>
   );
 }
 
 export default App;
+
+/*
+<Messages />
+        
+*/
