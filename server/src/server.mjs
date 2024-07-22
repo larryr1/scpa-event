@@ -21,7 +21,7 @@ const fetchFilterAndSortEvents = async () => {
 fetchFilterAndSortEvents();
 
 const app = express();
-app.use(cors({ origin: ["http://localhost:3000", "http://localhost:8000"]}));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json({ success: true });

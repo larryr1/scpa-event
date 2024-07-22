@@ -10,7 +10,7 @@ export const Messages = () => {
 
     let response;
     try {
-      response = await fetch("http://localhost:8000/messages");
+      response = await fetch("http://10.16.197.121:8000/messages");
     } catch (error) {
       console.log(error);
       pendingMessageData.current = ["FETCH_ERR_CHECK_LOGS"];

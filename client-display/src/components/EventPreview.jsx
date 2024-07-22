@@ -10,7 +10,7 @@ export const EventPreview = () => {
   async function getNewData() {
     let response;
     try {
-      response = await fetch("http://localhost:8000/events");
+      response = await fetch("http://10.16.197.121:8000/events");
     } catch (error) {
       console.log(error);
       eventData.current = [];
@@ -49,11 +49,32 @@ export const EventPreview = () => {
 
   const localizedDate = moment.tz(latestEvent.when, "America/New_York").toDate();
 
+  const eventIsToday = moment(localizedDate).isSame(moment(), 'day');
+
+  function getTimeString(start, end) {
+    if (start === null) {
+      return (
+        <span>— All Day Event</span>
+      )
+    }
+
+    if (end === null) {
+      return (
+        <span>at {formatEventTimeString(start)}</span>
+      )
+    } else {
+      return (
+        <span>from {formatEventTimeString(start)} to {formatEventTimeString(end)}</span>
+      )
+    }
+  }
+
   return (
     <div className="App-eventContainer">
+      <h6>Upcoming Event:</h6>
       <div className="App-eventContainerHeader">
         { latestEvent.title ? <p style={{ fontWeight: "bolder"}}>{latestEvent.title}</p> : null }
-        <p style={{ fontWeight: "lighter", marginLeft: "15px"}}>On {localizedDate.toLocaleDateString()} {latestEvent.start_time ? <span>at {formatEventTimeString(latestEvent.start_time)}</span> : null }</p>
+        <p style={{ fontWeight: "lighter", marginLeft: "15px"}}>{eventIsToday ? <span>Today</span> : <span>On {localizedDate.toLocaleDateString()}</span>} {getTimeString(latestEvent.start_time, latestEvent.end_time)}</p>
       </div>
       
       { latestEvent.text ? <p style={{ margin: 0 }}>{latestEvent.text}</p> : null }

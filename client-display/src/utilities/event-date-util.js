@@ -1,4 +1,6 @@
 export const formatEventTimeString = (time) => {
+if (time === null) return "";
+
   const segments = time.split(":");
   const hours = Number(segments[0]);
   const suffix = (hours < 12) ? "AM" : "PM";
