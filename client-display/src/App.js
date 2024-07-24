@@ -10,13 +10,13 @@ function App() {
 
   return (
     <div>
-      <p className='attribution'>This display programmed by Larry Rowe, SCPA IT Department.<br />http://10.16.197.121:3000</p>
+      <p className='attribution'>This display programmed by Larry Rowe, SCPA IT Department.<br />{window.location.href}<br />{process.env.NODE_ENV.toUpperCase()} MODE</p>
       <div className="App">
         <img src={logo} className='App-logo' alt='SCPA Logo' />
         <div className="App-body">
           <h1 className='School-color'>Somerset College Preparatory Academy</h1>
           <Clock className="App-time" />
-          <EventPreview />
+          <EventPreview className="mt-5" />
           <Messages />
         </div>
       </div>

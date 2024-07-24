@@ -14,6 +14,7 @@ const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","S
 /**
  * Generates a string from a Date object that looks like `Sunday, 1 January 2024 -- 12:00 AM`.
  * @param {*} date The date to generate the string from.
+ * @returns {string} The date string.
  */
 export const getStringFromDate = (date) => {
   const weekday = weekdays[date.getDay()];

@@ -52,7 +52,7 @@
 }
 
 .App-eventContainer {
-  margin-top: 3vh;
+  margin-top: 5vh;
   font-size: 1.4em;
   max-width: 75vw;
 }
@@ -67,7 +67,7 @@
 }
 
 .App-messageContainer {
-  margin-top: 10vh;
+  margin-top: 25px;
   max-width: 65vw;
 }
 

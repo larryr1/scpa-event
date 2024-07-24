@@ -3,14 +3,14 @@ import { formatEventTimeString } from "../utilities/event-date-util";
 import { deepEqual } from "../utilities/deep-equal";
 import moment from 'moment-timezone';
 
-export const EventPreview = () => {
+export const EventPreview = (props) => {
   const [renderedData, setRenderedData] = useState([]);
   const eventData = useRef([]);
 
   async function getNewData() {
     let response;
     try {
-      response = await fetch("http://10.16.197.121:8000/events");
+      response = await fetch("/events");
     } catch (error) {
       console.log(error);
       eventData.current = [];
@@ -71,10 +71,12 @@ export const EventPreview = () => {
 
   return (
     <div className="App-eventContainer">
-      <h6>Upcoming Event:</h6>
+      <div className="d-flex">
+        <h3>Upcoming Event</h3>
+        <h3 className="ms-2 fw-light">{eventIsToday ? <span>Today</span> : <span>On {localizedDate.toLocaleDateString()}</span>} {getTimeString(latestEvent.start_time, latestEvent.end_time)}</h3>
+      </div>
       <div className="App-eventContainerHeader">
         { latestEvent.title ? <p style={{ fontWeight: "bolder"}}>{latestEvent.title}</p> : null }
-        <p style={{ fontWeight: "lighter", marginLeft: "15px"}}>{eventIsToday ? <span>Today</span> : <span>On {localizedDate.toLocaleDateString()}</span>} {getTimeString(latestEvent.start_time, latestEvent.end_time)}</p>
       </div>
       
       { latestEvent.text ? <p style={{ margin: 0 }}>{latestEvent.text}</p> : null }
