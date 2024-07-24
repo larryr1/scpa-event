@@ -81,7 +81,7 @@ export const EventPreview = (props) => {
       </div>
       
       { latestEvent.text ? <p style={{ margin: 0 }}>{latestEvent.text}</p> : null }
-      { latestEvent.location ? <p className="App-eventLocation"><img src={locIcon} className="App-eventLocation"/> {latestEvent.location}</p> : <p style={{ fontWeight: "lighter", fontSize: ".6em"}}>No event location specified.</p> }
+      { latestEvent.location ? <p className="App-eventLocation"><img src={locIcon} className="App-eventLocation" alt=""/> {latestEvent.location}</p> : <p style={{ fontWeight: "lighter", fontSize: ".6em"}}>No event location specified.</p> }
     </div>
   );
 }
