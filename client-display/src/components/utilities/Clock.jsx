@@ -1,5 +1,20 @@
 import { useEffect, useState } from "react";
-import { getStringFromDate } from "../../utilities/event-date-util";
+
+const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+/**
+ * Generates a string from a Date object that looks like `Sunday, 1 January 2024 -- 12:00 AM`.
+ * @param {*} date The date to generate the string from.
+ * @returns {string} The date string.
+ */
+const getStringFromDate = (date) => {
+  const weekday = weekdays[date.getDay()];
+  const day = date.getMonth();
+  const month = date.toLocaleString('default', { month: 'long' });
+  const year = date.getFullYear();
+  const time = date.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', second: '2-digit', hour12: true });
+  return `${weekday}, ${day} ${month} ${year} — ${time}`;
+}
 
 /**
  * A component that shows a live-updating clock, formatted as it is described in {@link getStringFromDate}.
