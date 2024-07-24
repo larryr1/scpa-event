@@ -1,4 +1,4 @@
-import logo from './logo.png';
+import logo from './assets/logo.png';
 import './App.css';
 import { Clock } from './components/utilities/Clock';
 import { EventPreview } from './components/EventPreview';
@@ -14,7 +14,7 @@ function App() {
       <div className="App">
         <img src={logo} className='App-logo' alt='SCPA Logo' />
         <div className="App-body">
-          <h1 className='School-color'>Somerset College Preparatory Academy</h1>
+          <h1 className='School-color fw-bold display-2'>Somerset College Preparatory Academy</h1>
           <Clock className="App-time" />
           <EventPreview className="mt-5" />
           <Messages />

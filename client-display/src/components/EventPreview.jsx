@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { formatEventTimeString } from "../utilities/event-date-util";
 import { deepEqual } from "../utilities/deep-equal";
+import locIcon from '../assets/map-pin.svg';
 import moment from 'moment-timezone';
 
 export const EventPreview = (props) => {
@@ -80,7 +81,7 @@ export const EventPreview = (props) => {
       </div>
       
       { latestEvent.text ? <p style={{ margin: 0 }}>{latestEvent.text}</p> : null }
-      { latestEvent.location ? <p className="App-eventLocation">{latestEvent.location}</p> : <p style={{ fontWeight: "lighter", fontSize: ".6em"}}>No event location specified.</p> }
+      { latestEvent.location ? <p className="App-eventLocation"><img src={locIcon} className="App-eventLocation"/> {latestEvent.location}</p> : <p style={{ fontWeight: "lighter", fontSize: ".6em"}}>No event location specified.</p> }
     </div>
   );
 }

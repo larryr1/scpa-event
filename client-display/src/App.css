@@ -42,6 +42,7 @@
 
 .App-eventLocation {
   color: #61dafb;
+  stroke: #61dafb;
   font-weight: bold;
   font-size: 1.5rem;
 }
