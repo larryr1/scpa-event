@@ -74,7 +74,7 @@ export const EventPreview = (props) => {
     <div className="App-eventContainer">
       <div className="d-flex">
         <h3>Upcoming Event</h3>
-        <h3 className="ms-2 fw-light">{eventIsToday ? <span>Today</span> : <span>On {localizedDate.toLocaleDateString()}</span>} {getTimeString(latestEvent.start_time, latestEvent.end_time)}</h3>
+        <h3 className="ms-2 fw-light">{eventIsToday ? <span>Today</span> : <span>On {localizedDate.toLocaleDateString()}</span>} {getTimeString(latestEvent.start_time, latestEvent.end_time)} {latestEvent.end_time ? null : "(no scheduled end time)"}</h3>
       </div>
       <div className="App-eventContainerHeader">
         { latestEvent.title ? <p style={{ fontWeight: "bolder"}}>{latestEvent.title}</p> : null }

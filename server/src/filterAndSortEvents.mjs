@@ -29,18 +29,24 @@ export const filterAndSortEvents = (events) => {
         // Parse event start time and end time if available
         const eventStartTime = createMomentFromDateTime(event.when, event.start_time);
         const eventEndTime = createMomentFromDateTime(event.when, event.end_time);
-        
-        if (eventStartTime.isValid() && eventEndTime.isValid()) {
 
-          // Check if current time is between start time and end time (event is ongoing)
-          if (now.isBetween(eventStartTime, eventEndTime, null, '[)')) return true;
-
+        if (eventStartTime.isValid()) {
           // Check if current time is before start time (event has not started yet)
           if (now.isBefore(eventStartTime)) return true;
 
+          // Checks for if we also have an end time
+          if (eventEndTime.isValid() && event.end_time !== null) {
+            // Check if current time is between start time and end time (event is ongoing)
+            if (now.isBetween(eventStartTime, eventEndTime, null, '[)')) return true;
+
+          } else {
+            // Edge case for when the event only has a start time and the event is today (event does not end), (really isn't an edge case because they are entered wrong half the time), we want it to display anyway
+            if (now.isAfter(eventStartTime, "ms") && now.isSame(eventStartTime, "day")) return true;
+          }
+
           // Event is not in the future or ongoing (it has already passed)
           return false;
-
+          
         } else {
           console.error("An event has an invalid start or end time.");
           return false;
