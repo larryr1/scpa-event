@@ -5,9 +5,12 @@ import locIcon from '../assets/map-pin.svg';
 import moment from 'moment-timezone';
 
 export const EventPreview = (props) => {
+
+  // State
   const [renderedData, setRenderedData] = useState([]);
   const eventData = useRef([]);
 
+  // Function called by the interval to fetch new data
   async function getNewData() {
     let response;
     try {
@@ -22,17 +25,18 @@ export const EventPreview = (props) => {
     const events = await response.json();
     console.log(deepEqual(eventData.current, events));
     if (!deepEqual(eventData.current, events)) {
-      console.log("Difference detected. Setting new event data to " + JSON.stringify(events));
       eventData.current = events;
       setRenderedData(events);
     }
   }
 
+  // Set up the interval to fetch new data
   useEffect(() => {
     const interval = setInterval(getNewData, 1000);
     return () => { clearInterval(interval); }
   }, []);
   
+  // Loading text while we have no events
   if (renderedData.length === 0) {
     return (
       <div className="App-eventContainer">
@@ -42,20 +46,37 @@ export const EventPreview = (props) => {
     )
   }
 
-  console.log("renderedData is " + JSON.stringify(renderedData));
+  // Function to create Moment object from date and time
+  const createMomentFromDateTime = (date, time) => {
+    return moment(`${date} ${time}`, 'YYYY-MM-DD HH:mm:ss').tz("America/New_York");
+  }
 
+  // Define all date objects needed in the component
   const latestEvent = renderedData[renderedData.length - 1];
+  const localStartDate = moment.tz(latestEvent.when, "America/New_York").toDate();
+  const momentStartDate = moment(localStartDate);
+  const momentStartTime = createMomentFromDateTime(latestEvent.when, latestEvent.start_time);
+  const momentEndTime = createMomentFromDateTime(latestEvent.when, latestEvent.end_time);
 
-  console.log("Events rendering.");
+  const eventIsToday = momentStartDate.isSame(moment(), 'day');
 
-  const localizedDate = moment.tz(latestEvent.when, "America/New_York").toDate();
-
-  const eventIsToday = moment(localizedDate).isSame(moment(), 'day');
-
+  /**
+   * Returns a string representative of the start and end time, relative to now. For example:
+   * 
+   * `at [start_time]`
+   * 
+   * `until [end_time]`
+   * 
+   * `from [start_time] to [end_time]`
+   * 
+   * @param {*} start The start time, in the form of `hh:mm:ss`
+   * @param {*} end The end time, in the form of `hh:mm:ss`
+   * @returns The string representative of the start and end time.
+   */
   function getTimeString(start, end) {
     if (start === null) {
       return (
-        <span>— All Day Event</span>
+        <span>— All Day</span>
       )
     }
 
@@ -64,6 +85,11 @@ export const EventPreview = (props) => {
         <span>at {formatEventTimeString(start)}</span>
       )
     } else {
+      if (moment().isBetween(momentStartTime, momentEndTime, "ms", "[]")) {
+        return (
+          <span>until {formatEventTimeString(end)}</span>
+        )
+      }
       return (
         <span>from {formatEventTimeString(start)} to {formatEventTimeString(end)}</span>
       )
@@ -74,7 +100,7 @@ export const EventPreview = (props) => {
     <div className="App-eventContainer">
       <div className="d-flex">
         <h3>Upcoming Event</h3>
-        <h3 className="ms-2 fw-light">{eventIsToday ? <span>Today</span> : <span>On {localizedDate.toLocaleDateString()}</span>} {getTimeString(latestEvent.start_time, latestEvent.end_time)} {latestEvent.end_time ? null : "(no scheduled end time)"}</h3>
+        <h3 className="ms-2 fw-light">{eventIsToday ? <span>Today</span> : <span>On {momentStartDate.format("dddd, MM/DD/YYYY")}</span>} {getTimeString(latestEvent.start_time, latestEvent.end_time)}</h3>
       </div>
       <div className="App-eventContainerHeader">
         { latestEvent.title ? <p style={{ fontWeight: "bolder"}}>{latestEvent.title}</p> : null }
