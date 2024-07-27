@@ -23,9 +23,15 @@ fetchFilterAndSortEvents();
 const app = express();
 app.use(cors());
 
+app.use(express.static("src/public"));
+
 app.get("/", (req, res) => {
   res.json({ success: true });
 });
+
+app.get("/display", (req, res) => {
+  res.sendFile("views/display.html", { root: './src' });
+})
 
 app.get("/events", (req, res) => {
   res.json(events);
@@ -38,6 +44,13 @@ app.get("/messages", (req, res) => {
   ]);
 });
 
+app.get("*", (req, res) => {
+  res.sendFile("views/404.html", { root: "./src"});
+})
+
 setInterval(fetchFilterAndSortEvents, 5000);
 
-app.listen(8000);
+const port = process.env.PORT || 8000
+app.listen(port, () => {
+  console.log("Listening at " + port);
+});
