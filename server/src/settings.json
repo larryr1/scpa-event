@@ -1,0 +1,35 @@
+{
+  "settings": {
+    "region": "America/New_York",
+    "eventsEndpoint": "https://somersetcollegeprep.org/events-list",
+    "foregroundColor": "#921414",
+    "backgroundColor": "#ffffff",
+    "schoolThemeColor": "#e1cb66",
+    "schoolName": "Somerset College Preparatory Academy"
+
+  },
+  "users": [
+    {
+      "username": "admin",
+      "password": "f6310e11912a0adfb295fd8fc3e9d1012ebdb7c12e8a6ea0a7075049bca20450",
+      "salt": "81aef48af2",
+      "permissions": { "setMessage": true, "changeEventSettings": true, "admin": true },
+      "mustChangePassword": true
+    },
+    {
+      "username": "office",
+      "password": "f0dfe805cc2c131e7901106ad62f240d0d90466b3936d27bec0f73913bcc9fa9",
+      "salt": "63bd8f1a93",
+      "permissions": { "setMessage": true, "changeEventSettings": false, "admin": false },
+      "mustChangePassword": true
+    }
+  ],
+  "README": [
+    "This file contains all settings for the event display client and server.",
+    "Do not edit the users object manually. If you forgot the admin password, simply remove the child user objects from the 'users' object.",
+    "The server will regenerate the admin account, with username 'admin' and password 'password'",
+    "When setting the region, the value can be any of the timezones listed here: https://gist.github.com/diogocapela/12c6617fc87607d11fd62d2a4f42b02a",
+    "Replace the events endpoint with your school's website address, plus /events-list. You can see that it is already pre-set to the list for SCPA.",
+    "You can probably just swap out the somersetcollegeprep.org with whatever your domain is and it will work fine."
+  ]
+}
