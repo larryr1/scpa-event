@@ -13,14 +13,14 @@
       "username": "admin",
       "password": "f6310e11912a0adfb295fd8fc3e9d1012ebdb7c12e8a6ea0a7075049bca20450",
       "salt": "81aef48af2",
-      "permissions": { "setMessage": true, "changeEventSettings": true, "admin": true },
+      "permissions": { "setMessage": true, "changeEventSettings": true, "changeHouseSettings": true, "admin": true },
       "mustChangePassword": true
     },
     {
       "username": "office",
       "password": "f0dfe805cc2c131e7901106ad62f240d0d90466b3936d27bec0f73913bcc9fa9",
       "salt": "63bd8f1a93",
-      "permissions": { "setMessage": true, "changeEventSettings": false, "admin": false },
+      "permissions": { "setMessage": true, "changeEventSettings": false, "changeHouseSettings": true, "admin": false },
       "mustChangePassword": true
     }
   ],
