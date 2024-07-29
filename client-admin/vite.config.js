@@ -13,7 +13,15 @@ export default defineConfig({
   ],
   server: {
     host: true,
-    https: true
-  }
+    https: true,
+    proxy: {
+      '/api': {
+        target: "http://localhost:8000/api",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      }
+    }
+  },
+  
 })
   

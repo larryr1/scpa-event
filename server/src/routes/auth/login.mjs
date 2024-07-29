@@ -13,6 +13,8 @@ LoginRouter.post("/", (req, res) => {
 
   if (username === "admin" && password === "password") {
     req.session.loggedIn = true;
+    req.session.permissions = {};
+    req.session.permissions.messages = true;
     console.log("Logged in!");
 
     if (req.session.redirectAfterLogin) {

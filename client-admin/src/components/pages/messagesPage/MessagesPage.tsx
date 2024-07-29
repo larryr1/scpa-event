@@ -1,9 +1,11 @@
 import SortableList, { SortableItem } from "react-easy-sort";
 import { arrayMoveImmutable } from "array-move";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import "./messagePage.scss";
+import useAsyncEffect from "use-async-effect";
+import axios from "axios";
 
 interface Message {
   id: string;
@@ -33,11 +35,32 @@ export const MessagesPage = () => {
     setMessagesDirty(true);
   }
 
-  const submitMessages = () => {
+  const submitMessages = async () => {
     if (!messagesDirty) return;
-    alert("Pretend the messages got submitted.");
+    console.log("Submitting new messages.");
+
+    const response = await axios.post("/api/messages", { messages: messages }, { withCredentials: true });
+    console.log(response.status);
     setMessagesDirty(false);
   }
+
+  useAsyncEffect(async () => {
+    try {
+      const response = await axios.get("/api/messages", { headers: { "Content-Type": "application/json"}, withCredentials: true });
+
+      if (response.status !== 200) {
+        console.log(JSON.stringify(response));
+       throw new Error("Recieved a status code that is not 200.");
+      }
+
+      console.log("Res is " + JSON.stringify(response.data) ); 
+
+      setMessages(response.data);
+    } catch (error) {
+      console.log(error)
+      alert("Error fetching messages. Check console logs.");
+    }
+  }, []);
 
   return (
     <div>

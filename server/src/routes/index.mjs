@@ -29,12 +29,12 @@ RootRouter.get("/events", (req, res) => {
   res.json(events);
 });
 
-RootRouter.get("/messages", (req, res) => {
+/*RootRouter.get("/messages", (req, res) => {
   res.json([
     ["Welcome back, Spartans!"],
     ["See something, say something."]
   ]);
-});
+});*/
 
 RootRouter.get("*", (req, res) => {
   res.sendFile("views/404.html", { root: "./src"});
