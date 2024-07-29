@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SCPA Event - Sign In</title>
+    <style>
+      body {
+        margin: 0px;
+      }
+      header {
+        margin: 0px;
+        padding: 25px;
+        background-color: #a51717;
+        color: rgb(238, 238, 238);
+      }
+      main {
+        padding: 30px;
+      }
+      input {
+        padding: 5px;
+        border-radius: 8px;
+        border-width: 1px;
+        margin-bottom: 15px;
+      }
+      * {
+        font-family: sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Please Sign In</h1>
+    </header>
+    <main>
+      <p><b>Enter your username and password to continue.</b></p>
+      <form action="/auth/login" method="post">
+        <label for="username">Username</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password</label><br>
+        <input type="password" id="password" name="password" required>
+        <input type="submit">
+      </form>
+    </main>
+  </body>
+</html>
