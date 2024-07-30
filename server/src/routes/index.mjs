@@ -8,34 +8,62 @@ export const RootRouter = ParameterizedRouter();
 import { AuthRouter } from "./auth/index.mjs";
 import { DebugRouter } from "./debug/session.mjs";
 import { ApiRouter } from "./api/index.mjs";
+import { UsersDatabase } from "../database.mjs";
 
-RootRouter.use("/auth", AuthRouter);
-RootRouter.use("/debug", DebugRouter);
-RootRouter.use("/api", ApiRouter);
-
+// Home page
 RootRouter.get("/", (req, res) => {
-  res.redirect("/auth/login");
+  res.redirect("/admin");
 });
 
-RootRouter.get("/protected", EnsureAuthenticated, (req, res) => {
-  res.json({ success: true });
-})
+// Admin page
+RootRouter.get("/admin/*", EnsureAuthenticated, (req, res) => {
+  res.sendFile("views/admin.html", { root: './src' });
+});
 
+// Display
 RootRouter.get("/display", (req, res) => {
   res.sendFile("views/display.html", { root: './src' });
 });
 
+// Default permissions
+const defaultPermissions = {
+  admin: false,
+  editMessages: false,
+  editEvents: false,
+  editUsers: false,
+  points: {
+    manageEvents: false,
+    scanEvents: false,
+    managePoints: false
+  }
+};
+
+// Populate req.user each request
+const uuidRegex = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
+RootRouter.all("*", async (req, res, next) => {
+  console.log("userId matches regex: " + uuidRegex.test(String(req.session.userId) || ""));
+  if (!req.session.loggedIn ||  !uuidRegex.test(String(req.session.userId) || "")) return next();
+
+  const user = await UsersDatabase.findOneAsync({ _id: req.session.userId });
+  if (!user) return next();
+
+  req.user = {
+    _id: user._id,
+    username: user.username,
+    permissions: { ...defaultPermissions, ...user.permissions}, // Must spread the defaults BEFORE applying the actual permissions, so the actual values overwrite.
+  };
+  console.log("Set req.user to " + JSON.stringify(req.user));
+  return next();
+});
+
+RootRouter.use("/auth", AuthRouter);
+RootRouter.use("/debug", DebugRouter);
+RootRouter.use("/api", ApiRouter);
 RootRouter.get("/events", (req, res) => {
   res.json(events);
 });
 
-/*RootRouter.get("/messages", (req, res) => {
-  res.json([
-    ["Welcome back, Spartans!"],
-    ["See something, say something."]
-  ]);
-});*/
-
+// 404 page
 RootRouter.get("*", (req, res) => {
   res.sendFile("views/404.html", { root: "./src"});
 });

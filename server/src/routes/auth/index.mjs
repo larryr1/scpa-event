@@ -4,8 +4,8 @@ export const AuthRouter = ParameterizedRouter();
 
 import { LoginRouter } from "./login.mjs";
 import { LogoutRouter } from "./logout.mjs";
-
-console.log(LoginRouter);
+import { SessionUserRouter } from "./sessionUser.mjs";
 
 AuthRouter.use("/login", LoginRouter);
 AuthRouter.use("/logout", LogoutRouter);
+AuthRouter.use("/", SessionUserRouter);

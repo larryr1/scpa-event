@@ -1,5 +1,6 @@
 import { EnsureApiAuthenticated } from "../../middleware/EnsureApiAuthenticated.mjs";
 import { MessagesRouter } from "./messages.mjs";
+import { ApiPermissionsRouter } from "./permissions.mjs";
 import { ParameterizedRouter } from "../../serverside/ParameterizedRouter.mjs";
 
 export const ApiRouter = ParameterizedRouter();
@@ -11,3 +12,4 @@ ApiRouter.get("/", (req, res) => {
 });
 
 ApiRouter.use("/messages", MessagesRouter);
+ApiRouter.use("/permissions", ApiPermissionsRouter);

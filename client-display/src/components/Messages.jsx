@@ -13,7 +13,7 @@ export const Messages = () => {
   async function fetchNewData() {
     let response;
     try {
-      response = await fetch("/messages");
+      response = await fetch("/api/messages");
     } catch (error) {
       console.log(error);
       pendingMessageData.current = ["FETCH_ERR_CHECK_LOGS"];
@@ -51,7 +51,7 @@ export const Messages = () => {
   return (
     <div className="App-messageContainer">
       {messageData.map(message => {
-        return <p style={{ fontSize: "3rem"}}>{message}</p>
+        return <p style={{ fontSize: "3rem"}} key={message.id}>{message.message}</p>
       })}
     </div>
   );

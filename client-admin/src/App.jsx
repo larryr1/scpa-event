@@ -11,11 +11,35 @@ import { MessagesPage } from './components/pages/messagesPage/MessagesPage';
 import { EventsPage } from './components/pages/EventsPage';
 import { UsersPage } from './components/pages/UsersPage';
 import { PointsPage } from './components/pages/PointsPage';
+import { useRecoilState } from 'recoil';
+import { userPermissionsState } from './atoms/userPermissionsState.mjs';
+import useAsyncEffect from 'use-async-effect';
+import axios from "axios";
 
 function App() {
   const [count, setCount] = useState(0)
 
   const [scanData, setScanData] = useState(0);
+
+  const [permissions, setPermissions] = useRecoilState(userPermissionsState);
+
+  useAsyncEffect(async () => {
+    try {
+      const response = await axios.get("/api/permissions", { headers: { "Content-Type": "application/json"}, withCredentials: true });
+
+      if (response.status !== 200) {
+        console.log(JSON.stringify(response));
+       throw new Error("Recieved a status code that is not 200.");
+      }
+
+      console.log("Perms is " + JSON.stringify(response.data) ); 
+
+      setPermissions(response.data);
+    } catch (error) {
+      console.log(error)
+      alert("Error fetching permissions. Check console logs.");
+    }
+  }, []);
 
   return (
     <div>

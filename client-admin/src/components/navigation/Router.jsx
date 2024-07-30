@@ -6,4 +6,7 @@ export const router = createBrowserRouter([
     path: "*",
     element: <App />
   }
-]);
+],
+{
+  basename: "/admin"
+});
