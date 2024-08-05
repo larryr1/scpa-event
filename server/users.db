@@ -1,2 +1,2 @@
-{"_id":"69701513-5e57-40f5-a32a-822e8a165df6","username":"admin","password":"3227d55c6bea8c846931d01659c41a77aa64831ae4d3159fc17ae74ff9bd09f3","permissions":{"admin":true}}
-{"_id":"dae92fb9-6763-4377-afc5-9d10d880e468","username":"office","password":"b2d5945f8528d536ae0493ecba5d0f7741997c6c75d55f9f9df3a980cbaeafca","permissions":{"editMessages":true}}
+{"_id":"1f7b8d03-2160-4b96-95e3-e5383400f204","username":"admin","password":"7121d7a6ef13d51692b64a69151b3411e9c990ab1d53e33ac3c09cb6d0216184","permissions":{"admin":true}}
+{"_id":"b3b28dbd-6c0f-4d76-8a3c-423a1dc52f57","username":"test1","password":"e545ba992b5e54288461cccf4c12beff2c2e92b97fc560905379a978c67a712c","permissions":{"admin":false,"editMessages":false,"editEvents":false,"editUsers":false,"points":{"manageEvents":false,"scanEvents":false,"managePoints":false}}}

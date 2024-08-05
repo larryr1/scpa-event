@@ -12,20 +12,21 @@ import { EventsPage } from './components/pages/EventsPage';
 import { UsersPage } from './components/pages/UsersPage';
 import { PointsPage } from './components/pages/PointsPage';
 import { useRecoilState } from 'recoil';
-import { userPermissionsState } from './atoms/userPermissionsState.mjs';
+import { userState } from './atoms/userState.mjs';
 import useAsyncEffect from 'use-async-effect';
 import axios from "axios";
+import { AccountPage } from './components/pages/AccountPage';
 
 function App() {
   const [count, setCount] = useState(0)
 
   const [scanData, setScanData] = useState(0);
 
-  const [permissions, setPermissions] = useRecoilState(userPermissionsState);
+  const [user, setUser] = useRecoilState(userState);
 
   useAsyncEffect(async () => {
     try {
-      const response = await axios.get("/api/permissions", { headers: { "Content-Type": "application/json"}, withCredentials: true });
+      const response = await axios.get("/api/user", { headers: { "Content-Type": "application/json"}, withCredentials: true });
 
       if (response.status !== 200) {
         console.log(JSON.stringify(response));
@@ -34,10 +35,10 @@ function App() {
 
       console.log("Perms is " + JSON.stringify(response.data) ); 
 
-      setPermissions(response.data);
+      setUser(response.data);
     } catch (error) {
       console.log(error)
-      alert("Error fetching permissions. Check console logs.");
+      alert("Error fetching user details. Your login session may have expired. Please refresh the page.");
     }
   }, []);
 
@@ -52,6 +53,7 @@ function App() {
             <Route path='/events' element={<EventsPage />} />
             <Route path='/users' element={<UsersPage />} />
             <Route path='/points' element={<PointsPage />} />
+            <Route path='/account' element={<AccountPage />} />
           </Routes>
         </div>
         <p className='mt-2 text-secondary'>SCPA Event Dashboard programmed by Larry Rowe, SCPA IT Department.</p>

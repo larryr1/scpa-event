@@ -1,4 +1,6 @@
 import nedb from '@seald-io/nedb';
+import { createSaltedHash } from './lib/auth/CreateSaltedHash.mjs';
+import { randomUUID } from 'crypto';
 
 export const UsersDatabase = new nedb({ filename: "users.db", autoload: true });
 export const SettingsDatabase = new nedb({ filename: "settings.db", autoload: true });
@@ -11,10 +13,11 @@ UsersDatabase.findOne({ username: "admin"}, (err, doc) => {
   
   console.log("Creating default admin account.");
 
+  const id = randomUUID();
   UsersDatabase.insert({
-    _id: "69701513-5e57-40f5-a32a-822e8a165df6",
+    _id: id,
     username: "admin",
-    password: "3227d55c6bea8c846931d01659c41a77aa64831ae4d3159fc17ae74ff9bd09f3",
+    password: createSaltedHash("password", id),
     permissions: {
       admin: true
     }

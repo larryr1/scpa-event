@@ -13,7 +13,7 @@ const createMomentFromDateTime = (date, time) => {
 };
 
 // Function to filter and sort events
-export const filterAndSortEvents = (events) => {
+export const filterSortEvents = (events) => {
   // Current date/time in EST
   const now = moment().tz(timezone);
   const today = moment().tz(timezone).startOf("day");

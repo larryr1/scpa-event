@@ -1,4 +1,5 @@
 import { SettingsDatabase } from "../../database.mjs";
+import { GetPermissionCheckMiddleware } from "../../lib/auth/GetPermissionCheckMiddleware.mjs";
 import { EnsureApiAuthenticated } from "../../middleware/EnsureApiAuthenticated.mjs";
 import { ParameterizedRouter } from "../../serverside/ParameterizedRouter.mjs";
 
@@ -19,11 +20,7 @@ MessagesRouter.get("/", async (req, res) => {
   }
 });
 
-MessagesRouter.post("/", EnsureApiAuthenticated, async (req, res) => {
-  if (!req.user.permissions.editMessages && !req.user.permissions.admin) {
-    res.status(403).json({ success: false, error: "You do not have access to modify that resource.", code: "ENOACCESS" });
-    return;
-  }
+MessagesRouter.post("/", EnsureApiAuthenticated, GetPermissionCheckMiddleware("editMessages"), async (req, res) => {
 
   try {
     await SettingsDatabase.updateAsync(

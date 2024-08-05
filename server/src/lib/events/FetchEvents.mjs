@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Function to fetch events data using Axios
-const fetchEventsData = async () => {
+export const fetchEvents = async () => {
   try {
     const response = await axios.get('https://somersetcollegeprep.org/events-list');
     return response.data; // Assuming the response is JSON and contains an array of events
@@ -10,5 +10,3 @@ const fetchEventsData = async () => {
     return []; // Return an empty array in case of error
   }
 };
-
-export { fetchEventsData };

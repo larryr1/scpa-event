@@ -1,11 +1,12 @@
 import { UsersDatabase } from "../../database.mjs";
+import { createSaltedHash } from "../../lib/auth/CreateSaltedHash.mjs";
 import { ParameterizedRouter } from "../../serverside/ParameterizedRouter.mjs";
 import crypto from 'crypto';
 
 export const LoginRouter = ParameterizedRouter();
 
 LoginRouter.get("/", (req, res) => {
-  res.sendFile("views/login.html", { root: "./src"});
+  res.render("login.hbs");
 });
 
 LoginRouter.post("/", async (req, res) => {
@@ -23,8 +24,8 @@ LoginRouter.post("/", async (req, res) => {
   }
 
   // Check password hash
-  if (!user || !(user.password === crypto.createHash('sha256').update(password + user._id).digest("hex"))) {
-    res.sendFile("views/login_incorrect.html", { root: './src' });
+  if (!user || !(user.password === createSaltedHash(password, user._id))) {
+    res.render("login", { dangerMessage: "Password incorrect."});
     return;
   }
 

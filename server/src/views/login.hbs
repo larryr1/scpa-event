@@ -39,7 +39,19 @@
         <input type="password" id="password" name="password" required>
         <input type="submit">
       </form>
-      <p style="color: #8d1616"><b>Username/password incorrect.</b></p>
+      <p style="color: #8d1616"><b><span id="dangerMessageElem"></span><span id="ssrDangerMessage">{{ dangerMessage }}</span></b></p>
+      <p style="color: #56aa25"><b><span id="successMessageElem"></span><span id="ssrSuccessMessage">{{ successMessage }}</span></b></p>
+      
+      <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("dangerMessage")) {
+          document.getElementById("dangerMessageElem").innerText = params.get("dangerMessage");
+        }
+
+        if (params.get("successMessage")) {
+          document.getElementById("successMessageElem").innerText = params.get("successMessage");
+        }
+      </script>
     </main>
   </body>
 </html>

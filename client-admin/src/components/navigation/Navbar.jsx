@@ -1,12 +1,11 @@
-import { Link, NavLink } from "react-router-dom"
-import { useRecoilValue } from "recoil"
-import { userPermissionsState } from "../../atoms/userPermissionsState.mjs"
+import { NavLink } from "react-router-dom"
 import PermissionChecker from "../PermissionChecker";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../atoms/userState.mjs";
 
 export const Navbar = () => {
-  const permissions = useRecoilValue(userPermissionsState);
 
-  console.log("Rendering nav with " + JSON.stringify(permissions));
+  const user = useRecoilValue(userState);
 
   return (
     <nav className="navbar navbar-dark navbar-expand-lg bg-dark">
@@ -23,7 +22,7 @@ export const Navbar = () => {
             <PermissionChecker permission="editUsers"><NavLink to="/users" className="nav-link">Users</NavLink></PermissionChecker>
             <PermissionChecker permission="points"><NavLink to="/points" className="nav-link">Points</NavLink></PermissionChecker>
             <div className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Account</a>
+              <a className="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">User: <code>{user.username}</code></a>
               <ul className="dropdown-menu">
                 <li><NavLink to="/account" className="dropdown-item">Account</NavLink></li>
                 <hr className="dropdown-divider" />

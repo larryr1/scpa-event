@@ -2,6 +2,9 @@ import { EnsureApiAuthenticated } from "../../middleware/EnsureApiAuthenticated.
 import { MessagesRouter } from "./messages.mjs";
 import { ApiPermissionsRouter } from "./permissions.mjs";
 import { ParameterizedRouter } from "../../serverside/ParameterizedRouter.mjs";
+import { ApiUserRouter } from "./user.mjs";
+import { ApiCreateUserRouter } from "./createUser.mjs";
+import { RouterApiEvents } from "./events.mjs";
 
 export const ApiRouter = ParameterizedRouter();
 
@@ -13,3 +16,6 @@ ApiRouter.get("/", (req, res) => {
 
 ApiRouter.use("/messages", MessagesRouter);
 ApiRouter.use("/permissions", ApiPermissionsRouter);
+ApiRouter.use("/user", ApiUserRouter);
+ApiRouter.use("/createuser", ApiCreateUserRouter);
+ApiRouter.use("/events", RouterApiEvents);
